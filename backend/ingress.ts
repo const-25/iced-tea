@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 import readline from 'readline';
 import fs from 'fs';
+import { matcher } from './matcher';
+import { createClient } from 'redis';
 
 const GBP = {
   currency: 'GBP',
@@ -8,6 +10,7 @@ const GBP = {
 }
 
 const prisma = new PrismaClient()
+const redis = createClient();
 
 // GBP only
 // TODO: add support for other currency
@@ -44,6 +47,7 @@ function parseTransaction(line: string): IcedTea.Transaction {
 }
 
 async function ingress() {
+  await redis.connect();
 
   // Read the file line by line
   const rl = readline.createInterface({
@@ -74,6 +78,7 @@ async function ingress() {
         update: {}
       });
 
+      await matcher(transaction, prisma, redis);
     } catch (e) {
       console.error(e);
     }
@@ -83,9 +88,11 @@ async function ingress() {
 ingress()
 .then(async () => {
   await prisma.$disconnect()
+  // redis.disconnect();
 })
 .catch(async (e) => {
   console.error(e)
   await prisma.$disconnect()
+  // redis.disconnect();
   process.exit(1)
 })

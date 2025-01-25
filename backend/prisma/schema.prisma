@@ -12,3 +12,36 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Transaction {
+  transactionId     String      @id @db.Uuid
+  user              User        @relation(fields: [userId], references: [userId])
+  userId            String      @db.Uuid
+  // rewardMatch       RewardMatch?
+  valueDate         DateTime    @updatedAt @db.Date
+  amountInMinorUnit Int
+  currency          String      @db.VarChar(3)
+  remittanceInformationUnstructured String
+}
+
+// model RewardMatch {
+//   id                Int         @id @default(autoincrement())
+//   transaction       Transaction @relation(fields: [transactionId], references: [transactionId])
+//   transactionId     String      @unique @db.Uuid
+//   user              User        @relation(fields: [userId], references: [userId])
+//   userId            String      @unique @db.Uuid
+//   venue             Venue       @relation(fields: [venueId], references: [id])
+//   venueId           Int 
+// }
+
+model User {
+  userId            String      @id @db.Uuid
+  transactions      Transaction[]
+  // rewards           RewardMatch[]
+}
+
+// model Venue {
+//   id                Int         @id @default(autoincrement())
+//   name              String      @unique
+//   rewardMatch       RewardMatch[]
+// }

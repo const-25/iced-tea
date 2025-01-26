@@ -29,7 +29,7 @@ by Alex S.
 - No fuzzy string match for discovery
 - Use simple express-prisma
 
-## Instruction
+## Instructions
 1. Clone this repo
 2. Run `docker-compose up --build` at root dir
 3. Navigate to `http://localhost:3001`
@@ -50,7 +50,7 @@ What features do I want to develop? What is the rough plan for the application?
 - [x] Docker
     - [x] PostgreSQL
     - [x] Redis
-    - [x] Node.js REST pi
+    - [x] Node.js REST api
 - [x] Schema/type
     - [x] Seeding script
 - [x] Chore: seeding
@@ -71,3 +71,4 @@ What features do I want to develop? What is the rough plan for the application?
 - [x] Feature: reward calculations
     - [x] Queries and calculations
     - [x] REST api
+- [x] Test: add supertest

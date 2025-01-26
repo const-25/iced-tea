@@ -11,7 +11,7 @@ FROM base AS runner
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run prisma:generate
+RUN npm run prisma:generate --sql
 
 # Expose port 3001
 EXPOSE 3001

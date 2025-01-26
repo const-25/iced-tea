@@ -3,6 +3,7 @@ import readline from 'readline';
 import fs from 'fs';
 import { matcher } from './matcher';
 import { createClient } from 'redis';
+import { env } from "./express/common/utils/envConfig";
 
 const GBP = {
   currency: 'GBP',
@@ -10,7 +11,7 @@ const GBP = {
 }
 
 const prisma = new PrismaClient()
-const redis = createClient();
+const redis = createClient({url: env.REDIS_URL});
 
 // GBP only
 // TODO: add support for other currency

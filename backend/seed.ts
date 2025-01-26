@@ -1,9 +1,10 @@
 import { PrismaClient } from '@prisma/client'
 import { createClient } from 'redis';
 import { VENUES_SEED } from './constants'
+import { env } from "./express/common/utils/envConfig";
 
 const prisma = new PrismaClient()
-const redis = createClient();
+const redis = createClient({url: env.REDIS_URL});
 
 async function seed() {
   await redis.connect();

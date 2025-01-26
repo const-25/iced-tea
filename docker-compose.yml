@@ -26,24 +26,16 @@ services:
       interval: 1s
       timeout: 5s
       retries: 10
-  # backend:
-  #   container_name: ice-tea-be
-  #   build: ./backend
-  #   ports:
-  #     - "8000:8000"
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
-  #   volumes:
-  #     - ./backend:/usr/src/app
-  #   env_file:
-  #     - ./backend/.env
-
-#  frontend:
-#    container_name: ice-tea-fe
-#    build: ./frontend
-#    ports:
-#      - "3000:3000"
-#    volumes:
-#      - ./frontend:/usr/src/app
-#      - /usr/src/app/node_modules
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/usr/src/app
+    env_file:
+      - ./backend/.env

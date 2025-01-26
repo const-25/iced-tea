@@ -18,7 +18,7 @@ by Alex S.
 - The venue list is static, and any scaling is manageable
 - Having a high throughput is desirable
 - No two venues should have unacceptably similar identifiers
-- Use calendar month
+- Use calendar month, ignore timezones
 - Redemption is out of scope
 
 ### Decisions
@@ -26,6 +26,7 @@ by Alex S.
 - Two-step approach: exact matches (`matcher.ts`), and pattern matches (`discovery.ts`)
 - Use bloom filter to skip costly pattern matches for known negatives
 - No fuzzy string match for discovery
+- Use simple express-prisma
 
 ## Planing
 

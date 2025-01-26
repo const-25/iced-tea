@@ -12,7 +12,11 @@ export async function discovery(transaction: IcedTea.Transaction, prisma: Prisma
   
   if (match) {
     const { venueId } = match;
+
+    // Add to the known positive set
     redis.hSet('match:positive', remittanceInformationUnstructured, venueId);
+
+    // Upsert the match
     await prisma.rewardMatch.upsert({
       where: { transactionId },
       create: {
@@ -24,6 +28,7 @@ export async function discovery(transaction: IcedTea.Transaction, prisma: Prisma
     });
     
   } else {
+    // Add to the known negative bloom filter
     redis.bf.add('match:nagative', remittanceInformationUnstructured);
   }
 }

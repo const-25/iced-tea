@@ -6,10 +6,11 @@ import { discovery } from "./discovery";
 export async function matcher(transaction: IcedTea.Transaction, prisma: PrismaClient, redis: ReturnType<typeof createClient>) {
     const { remittanceInformationUnstructured, transactionId, userId } = transaction;
 
-    // Check if the transaction is a known positive and get venue
+    // Check if the transaction is a known positive and get venueId
     const venueId = await redis.hGet('match:positive', remittanceInformationUnstructured);
 
     if (venueId) {
+      // Upsert the match
       await prisma.rewardMatch.upsert({
         where: { transactionId },
         create: {
@@ -23,10 +24,7 @@ export async function matcher(transaction: IcedTea.Transaction, prisma: PrismaCl
 
     // Check if the transaction is a known negative
     const nagative = await redis.bf.exists('match:nagative', remittanceInformationUnstructured);
-    if (nagative) {
-      console.log({remittanceInformationUnstructured});
-      return false;
-    }
+    if (nagative) return false; // Abort
 
     // Transaction not known, send to discovery.ts
     discovery(transaction, prisma, redis);

@@ -60,11 +60,13 @@ async function ingress() {
       const transaction = parseTransaction(line);
       const { userId, transactionId, valueDate, amountInMinorUnit, currency, remittanceInformationUnstructured } = transaction;
      
+      // Create the user if it doesn't exist, unnecessary if we have a separate user creation step
       await prisma.user.createMany({
         data: [{ userId }],
         skipDuplicates: true
       });
 
+      // Upsert the transaction
       await prisma.transaction.upsert({
         where: { transactionId },
         create: {
@@ -78,6 +80,7 @@ async function ingress() {
         update: {}
       });
 
+      // Match the transaction
       await matcher(transaction, prisma, redis);
     } catch (e) {
       console.error(e);

@@ -41,6 +41,7 @@ by Alex S.
 - Try `docker compose up --build`
 - Make sure ports `3001`, `5432`, `6379`, and `8001` are unused.
 - Do not use Safari
+- There is a bug with Prisma TypedSQL & Docker, let me know if you see schema/relation errors at Docker first start.
 
 ## Planing
 

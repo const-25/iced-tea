@@ -5,7 +5,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "tsx watch --clear-screen=false ./index.ts | pino-pretty"
+    "dev": "tsx watch --clear-screen=false ./index.ts | pino-pretty",
+    "prisma-generate": "prisma generate"
   },
   "prisma": {
     "seed": "tsx seed.ts"

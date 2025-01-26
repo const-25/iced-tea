@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "tsx watch --clear-screen=false ./index.ts | pino-pretty",
+    "ingress": "tsx ./ingress.ts | pino-pretty",
     "prisma:generate": "prisma generate",
     "prisma:migrate:reset:force": "prisma migrate reset -f"
   },

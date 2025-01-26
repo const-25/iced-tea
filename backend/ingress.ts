@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client'
-import readline from 'readline';
-import fs from 'fs';
 import { matcher } from './matcher';
 import { createClient } from 'redis';
 import { env } from "./express/common/utils/envConfig";
+import transactions from './transactions.json';
+import pino from 'pino';
 
 const GBP = {
   currency: 'GBP',
@@ -12,6 +12,7 @@ const GBP = {
 
 const prisma = new PrismaClient()
 const redis = createClient({url: env.REDIS_URL});
+const logger = pino({ name: "ingress start" });
 
 // GBP only
 // TODO: add support for other currency
@@ -26,14 +27,13 @@ function checkCurrency(transactionAmount: IcedTea.TransactionAmount) {
   };
 }
 
-function parseTransaction(line: string): IcedTea.Transaction {
-  const {
-    userId,
-    transactionId,
-    valueDate,
-    transactionAmount,
-    remittanceInformationUnstructured
-  }: IcedTea.IncomingTransaction = JSON.parse(line);
+function parseTransaction({
+  userId,
+  transactionId,
+  valueDate,
+  transactionAmount,
+  remittanceInformationUnstructured
+}: IcedTea.IncomingTransaction): IcedTea.Transaction {
 
   const { amountInMinorUnit, currency } = checkCurrency(transactionAmount);
 
@@ -50,13 +50,7 @@ function parseTransaction(line: string): IcedTea.Transaction {
 async function ingress() {
   await redis.connect();
 
-  // Read the file line by line
-  const rl = readline.createInterface({
-    input: fs.createReadStream('../transactions.jsonl'),
-    crlfDelay: Infinity
-  });
-  
-  rl.on('line', async (line) => {
+  const promises = transactions.map(async (line) => {
     try {
       const transaction = parseTransaction(line);
       const { userId, transactionId, valueDate, amountInMinorUnit, currency, remittanceInformationUnstructured } = transaction;
@@ -82,21 +76,23 @@ async function ingress() {
       });
 
       // Match the transaction
-      await matcher(transaction, prisma, redis);
+      await matcher(transaction, prisma, redis, logger);
     } catch (e) {
       console.error(e);
     }
   });
+
+  await Promise.allSettled(promises);
 }
 
 ingress()
 .then(async () => {
   await prisma.$disconnect()
-  // redis.disconnect();
+  redis.disconnect();
 })
 .catch(async (e) => {
   console.error(e)
   await prisma.$disconnect()
-  // redis.disconnect();
+  redis.disconnect();
   process.exit(1)
 })

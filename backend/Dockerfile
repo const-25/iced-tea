@@ -17,4 +17,4 @@ RUN npm run prisma:generate
 EXPOSE 3001
 
 # Run dev server
-CMD npm run prisma:migrate:reset:force && npm run dev
+CMD npm run prisma:migrate:reset:force && npm run ingress && npm run dev

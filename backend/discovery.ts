@@ -26,9 +26,10 @@ export async function discovery(transaction: IcedTea.Transaction, prisma: Prisma
       },
       update: {}
     });
-    
-  } else {
-    // Add to the known negative bloom filter
-    redis.bf.add('match:nagative', remittanceInformationUnstructured);
+    return true;
   }
+
+  // Add to the known negative bloom filter
+  redis.bf.add('match:nagative', remittanceInformationUnstructured);
+  return false;
 }

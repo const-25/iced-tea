@@ -29,6 +29,19 @@ by Alex S.
 - No fuzzy string match for discovery
 - Use simple express-prisma
 
+## Instruction
+1. Clone this repo
+2. Run `docker-compose up --build` at root dir
+3. Navigate to `http://localhost:3001`
+4. Open `User`
+5. Click `Try it out`, and `Execute`
+
+### Troubleshooting
+- Make sure Docker is installed
+- Try `docker compose up --build`
+- Make sure ports `3001`, `5432`, `6379`, and `8001` are unused.
+- Do not use Safari
+
 ## Planing
 
 What features do I want to develop? What is the rough plan for the application?
@@ -45,7 +58,7 @@ What features do I want to develop? What is the rough plan for the application?
 - [x] Feature: ingress
     - [x] Parsing transaction
     - [x] Persistence to PostgreSQL
-    - [ ] Make it part of the seeding script
+    - [x] Make it part of the seeding script
 - [x] Feature: matcher
     - [x] Match known positives using redis hashes
     - [x] Persistence to PostgreSQL

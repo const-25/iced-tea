@@ -5,6 +5,7 @@ import { pino } from "pino";
 
 import { openAPIRouter } from "./express/api-docs/openAPIRouter";
 import { healthCheckRouter } from "./express/api/healthCheck/healthCheckRouter";
+import { rewardsRouter } from "./rewards";
 import errorHandler from "./express/common/middleware/errorHandler";
 import requestLogger from "./express/common/middleware/requestLogger";
 import { env } from "./express/common/utils/envConfig";
@@ -26,6 +27,7 @@ app.use(requestLogger);
 
 // Routes
 app.use("/health-check", healthCheckRouter);
+app.use("/user", rewardsRouter);
 
 // Swagger UI
 app.use(openAPIRouter);

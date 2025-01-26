@@ -11,10 +11,9 @@ FROM base AS runner
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run prisma:generate --sql
 
 # Expose port 3001
 EXPOSE 3001
 
 # Run dev server
-CMD npm run prisma:migrate:reset:force && npm run ingress && npm run dev
+CMD npm run start

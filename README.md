@@ -11,7 +11,7 @@ by Alex S.
 - [ ] Calculate a cashback reward for each user each month
     - [ ] For every venue they visit they get 5% cashback
     - [ ] And if they visit more than three venues in a month they get an extra 10% of the total
-- [ ] Write a README documenting your solution and any assumptions and decisions you made
+- [x] Write a README documenting your solution and any assumptions and decisions you made
 
 ### Assumptions
 - The JSONL is clean
@@ -36,9 +36,9 @@ What features do I want to develop? What is the rough plan for the application?
     - [x] Redis
     - [ ] Node.js REST pi
 - [x] Schema/type
-    - [ ] Seeding script
+    - [x] Seeding script
 - [x] Chore: seeding
-    - [ ] Seed venues, postgres
+    - [x] Seed venues, postgres
     - [x] Reserve, redis
 - [x] Feature: ingress
     - [x] Parsing transaction
@@ -53,5 +53,5 @@ What features do I want to develop? What is the rough plan for the application?
     - [x] Persistence to redis
     - [x] Persistence to PostgreSQL
 - [ ] Feature: reward calculations
-    - [] Queries and calculations
-    - [] REST api
+    - [ ] Queries and calculations
+    - [ ] REST api

@@ -5,7 +5,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "npm run prisma:generate && npm run prisma:migrate:reset:force && npm run prisma:generate:sql && npm run ingress && npm run dev",
+    "start": "npm run prisma:generate; npm run prisma:migrate:reset:force; npm run prisma:generate:sql; npm run ingress; npm run dev",
     "dev": "tsx watch --clear-screen=false ./index.ts | pino-pretty",
     "ingress": "tsx ./ingress.ts | pino-pretty",
     "prisma:generate:sql": "prisma generate --sql",

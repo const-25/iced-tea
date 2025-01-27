@@ -19,8 +19,8 @@ describe('GET /:userId/rewards', () => {
     it('should return rewards for a valid userId', async () => {
         const prisma = new PrismaClient();
         const mockRewards = [
-            { month: new Date('2023-01-01'), venuecount: 4, sum: BigInt(-10000) },
-            { month: new Date('2023-02-01'), venuecount: 3, sum: BigInt(-10000) },
+            { month: new Date('2023-01-01'), venuecount: 5, sum: BigInt(-10000) },
+            { month: new Date('2023-02-01'), venuecount: 4, sum: BigInt(-10000) },
             { month: new Date('2023-03-01'), venuecount: 2, sum: BigInt(-10000) },
         ];
         prisma.$queryRawTyped.mockResolvedValue(mockRewards);

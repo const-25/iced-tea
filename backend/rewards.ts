@@ -27,7 +27,7 @@ rewardsRegistry.registerPath({
 const calculateCashback = ({ month, venuecount, sum: sumBigInt }: getRewards.Result) => {
   const venueCount = Number(venuecount);
   const sum = Number(sumBigInt);
-  const rate = venueCount >= 3 ? 0.05 * 1.1 : 0.05;
+  const rate = venueCount >= 4 ? 0.05 * 1.1 : 0.05;
   return {
     month,
     venueCount,

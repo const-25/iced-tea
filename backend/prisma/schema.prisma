@@ -23,9 +23,7 @@ model Transaction {
   valueDate         DateTime    @updatedAt @db.Date
   amountInMinorUnit Int
   currency          String      @db.VarChar(3)
-  remittanceInformationUnstructured String
-
-  
+  remittanceInformationUnstructured String  
 }
 
 model RewardMatch {
@@ -36,6 +34,7 @@ model RewardMatch {
   userId            String      @db.Uuid
   venue             Venue       @relation(fields: [venueId], references: [venueId])
   venueId           Int
+  @@index([userId], type: Hash)
 }
 
 model User {
